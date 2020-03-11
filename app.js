@@ -9,7 +9,12 @@ var jsonParser = bodyParser.json();
 const port = process.env.PORT || 8081;
 
 const corsConfig = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+    var allowedOrigins = ['http://localhost:8080', 'https://simple-bank-form.herokuapp.com'];
+    var origin = req.headers.origin;
+    if (allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
     res.header('Access-Control-Allow-Credentials', true)
     res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT')
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
@@ -37,6 +42,7 @@ app.post("/transactions-data/add-transaction", jsonParser, function (req, res) {
     if (data[data.length - 1] && data[data.length - 1].id) {
         id = data[data.length - 1].id + 1;
     }
+    req.body.paymentSumm += ' руб.';
     req.body.id = id;
     data[data.length] = req.body;
 
