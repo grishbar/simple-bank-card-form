@@ -1,24 +1,17 @@
-# test_task_ida
+# Quiz
 
-## Project setup
-```
-npm install
-```
+Небольшой проект для проведения анкетирования среди руководителей предприятий можно посмтреть на [сайте](https://quiz-ekaterinburg.herokuapp.com) управление анкетированием происходит через адмиискую [страничку](https://quiz-ekaterinburg.herokuapp.com/admin) 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Available Scripts
 
-### Compiles and minifies for production
-```
-npm run build
-```
+In the project directory, you can run:
 
-### Lints and fixes files
-```
-npm run lint
-```
+### `node app.js`
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Runs the express node.js server for app
+
+### `cd client && npm start`
+
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The page will reload if you make edits.
