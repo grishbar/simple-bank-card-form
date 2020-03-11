@@ -1,6 +1,6 @@
-# Quiz
+# Simple bank card form
 
-Небольшой проект для проведения анкетирования среди руководителей предприятий можно посмтреть на [сайте](https://quiz-ekaterinburg.herokuapp.com) управление анкетированием происходит через адмиискую [страничку](https://quiz-ekaterinburg.herokuapp.com/admin) 
+Небольшая формочка для осуществления переводов банковской картой 
 
 ## Available Scripts
 
@@ -10,8 +10,8 @@ In the project directory, you can run:
 
 Runs the express node.js server for app
 
-### `cd client && npm start`
+### `cd client && npm run serve`
 
 Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 The page will reload if you make edits.
