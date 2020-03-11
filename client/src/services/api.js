@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default () => axios.create({
-  baseURL: (process.env.VUE_APP_API_URL !== undefined) ? process.env.VUE_APP_API_URL : 'http://localhost:8081',
+  baseURL: (process.env.NODE_ENV === 'production') ? 'https://simple-bank-form.herokuapp.com' : 'http://localhost:8081',
 });
