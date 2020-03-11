@@ -16,10 +16,8 @@ const routes = [
     name: 'PaymentResult',
     component: () => import('../views/PaymentResult.vue'),
     beforeEnter: (to, from, next) => {
-      console.log(store.state.successfulPayment.isPaymentDone);
       if (store.state.successfulPayment.isPaymentDone) {
         next();
-        console.log(store.state.successfulPayment);
         store.dispatch('updateIsPaymentDone');
       } else {
         next('/');

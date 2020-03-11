@@ -193,18 +193,15 @@ export default {
         // не самая лучшая обработка пост запроса, нет нормальной обработки,
         // что делать при различных ошибках во время фетча
         api().post('transactions-data/add-transaction', currentTransactionData)
-          .then((response) => console.log(response))
-          .catch((error) => console.log(error));
+          .catch((error) => (error));
         this.updateCurrentPayment(currentTransactionData);
         this.updateIsPaymentDone(true);
-        // document.location.href = '/payment-result';
         this.$router.push('payment-result');
       }
     },
   },
   mounted() {
     this.focusOnNextAfterComplete();
-    // this.addRublesToInput();
   },
 };
 

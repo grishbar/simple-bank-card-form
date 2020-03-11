@@ -5,7 +5,6 @@ export default {
     async fetchTransactions({ commit }) {
       api().get('transactions-data')
         .then((response) => {
-          console.log(response.data);
           commit('updateTransactions', response.data);
         });
     },
