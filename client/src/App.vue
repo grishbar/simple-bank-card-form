@@ -67,9 +67,4 @@ export default {
     }
   }
 
-  @media (max-width: 660px) {
-    .main-content-container {
-      justify-content: left;
-    }
-  }
 </style>
