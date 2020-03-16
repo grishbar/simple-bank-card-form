@@ -37,6 +37,7 @@ export default {
     font-weight: bold;
     width: 100%;
     text-align: center;
+    margin-top: 50px;
   }
   table,tr,th,td {
     padding: 5px;
@@ -45,7 +46,7 @@ export default {
     border-collapse: collapse;
   }
   th {
-    background-color: #0059bd;
+    background-color: #1f2229;
     font-size: 14px;
     font-family: "open_sans";
     color: white;

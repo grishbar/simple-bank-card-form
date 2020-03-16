@@ -35,4 +35,11 @@
         padding: 20px 30px 40px 30px;
         margin-left: 320px;
     }
+    @media (max-width: 960px) {
+      .footer {
+        margin-left: 0;
+        width: 100%;
+        max-width: 100%;
+      }
+    }
 </style>

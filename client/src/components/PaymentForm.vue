@@ -208,7 +208,6 @@ export default {
 </script>
 
 <style lang="scss">
-
   .bank-card {
     position: relative;
   }
@@ -389,5 +388,31 @@ export default {
 
   .wrong-input {
     border-color: red;
+  }
+
+  @media (max-width: 960px) {
+    .payment-form {
+      margin-left: -100px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .payment-form {
+      margin-left: 0px;
+    }
+    .bank-card_reversed {
+      left: 0;
+      top: 250px;
+    }
+    .main-content-container {
+      padding: 30px 10px;
+      padding-bottom: 250px;
+    }
+    .bank-card {
+      width: 300px;
+    }
+    .bank-card-number__input {
+      width: 56px;
+    }
   }
 </style>

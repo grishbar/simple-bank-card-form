@@ -58,4 +58,18 @@ export default {
     background-color: #f7f8f8;
     padding: 50px 30px;
   }
+
+  @media (max-width: 960px) {
+    .main-content-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 660px) {
+    .main-content-container {
+      justify-content: left;
+    }
+  }
 </style>
