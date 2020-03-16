@@ -7,12 +7,13 @@
         <div class="payment-data__title">Номер счета:</div>
         <input type="number" placeholder="00000000000000" required
           class="payment-data__input"
-          @keypress="preventNotNumbers($event)" />
+          @keypress="preventNotNumbers($event)"
+          v-model="paymentBill" />
       </div>
       <div class="payment-data">
       <div class="payment-data__title">Сумма платежа:</div>
         <input type="text" placeholder="0" required class="payment-data__input payment-data__summ"
-          @keypress="preventNotNumbers($event)" />
+          @keypress="preventNotNumbers($event)" v-model="paymentSumm" />
       </div>
       <div class="bank-card__title">
         Данные банковской карты
@@ -22,28 +23,28 @@
           <div class="bank-card-number">
             <div class="bank-card-number__title">Номер карты</div>
             <input type="text" maxlength="4" @keypress="preventNotNumbers($event)"
-              class="bank-card-number__input" required
+              class="bank-card-number__input" required v-model="cardNumberOne"
               v-bind:class="{'wrong-input': isCardNumberIncorrect}" />
             <input type="text" maxlength="4" @keypress="preventNotNumbers($event)"
-              class="bank-card-number__input" required
+              class="bank-card-number__input" required v-model="cardNumberTwo"
               v-bind:class="{'wrong-input': isCardNumberIncorrect}" />
             <input type="text" maxlength="4" @keypress="preventNotNumbers($event)"
-              class="bank-card-number__input" required
+              class="bank-card-number__input" required v-model="cardNumberThree"
               v-bind:class="{'wrong-input': isCardNumberIncorrect}" />
             <input type="text" maxlength="4" @keypress="preventNotNumbers($event)"
-              class="bank-card-number__input" required
+              class="bank-card-number__input" required v-model="cardNumberFour"
               v-bind:class="{'wrong-input': isCardNumberIncorrect}"
               @blur="isCardNumberValid" />
           </div>
           <div class="bank-card-date">
             <div class="bank-card-date__title">Срок действия</div>
-            <select name="bank-card-date__month" class="bank-card-date__month">
+            <select name="bank-card-date__month" class="bank-card-date__month" v-model="cardMonth">
               <option disabled>MM</option>
               <option v-for="n in 12" v-bind:key="n">
                 {{(n.toString().length > 1) ? n : '0' + n}}
               </option>
             </select>
-            <select name="bank-card-date__year" class="bank-card-date__year">
+            <select name="bank-card-date__year" class="bank-card-date__year" v-model="cardYear">
               <option disabled>YYYY</option>
               <option v-for="n in 12" v-bind:key="n">
                 {{new Date().getFullYear() + n - 1}}
@@ -53,7 +54,7 @@
           <div class="bank-card-holder">
             <input type="text" placeholder="Держатель карты" required
               class="bank-card-holder__input" @blur="isCardHolderValid"
-              v-bind:class="{'wrong-input': isCardHolderIncorrect}"/>
+              v-bind:class="{'wrong-input': isCardHolderIncorrect}" v-model="cardHolder" />
           </div>
         </div>
         <div class="bank-card bank-card_reversed">
@@ -61,7 +62,7 @@
             <div class="cvc-code__title">Код CVV2 / CVC2</div>
             <input type="text" name="" id="" maxlength="3" required class="cvc-code__input"
               @keypress="preventNotNumbers($event)" @blur="isCvcCodeValid"
-              v-bind:class="{'wrong-input': isCvcCodeIncorrect}" />
+              v-bind:class="{'wrong-input': isCvcCodeIncorrect}" v-model="cvvCode" />
           </div>
         </div>
       </div>
@@ -77,7 +78,19 @@ export default {
   name: 'PaymentForm',
   data() {
     return {
-      isCardNumberIncorrect: false, isCvcCodeIncorrect: false, isCardHolderIncorrect: false,
+      isCardNumberIncorrect: false,
+      isCvcCodeIncorrect: false,
+      isCardHolderIncorrect: false,
+      paymentBill: '',
+      paymentSumm: '',
+      cardNumberOne: '',
+      cardNumberTwo: '',
+      cardNumberThree: '',
+      cardNumberFour: '',
+      cardMonth: '',
+      cardYear: '',
+      cvvCode: '',
+      cardHolder: '',
     };
   },
   methods: {
@@ -121,8 +134,7 @@ export default {
       return true;
     },
     isCvcCodeValid() {
-      const cvcCodeInput = document.querySelector('.cvc-code__input');
-      if (cvcCodeInput.value.length !== 3 || !(/^\d+$/.test(cvcCodeInput.value))) {
+      if (this.cvvCode.length !== 3 || !(/^\d+$/.test(this.cvvCode))) {
         this.isCvcCodeIncorrect = true;
         return false;
       }
@@ -130,8 +142,7 @@ export default {
       return true;
     },
     isCardHolderValid() {
-      const cardHolderInput = document.querySelector('.bank-card-holder__input');
-      if (cardHolderInput.value.length < 4 || !(/^[A-Za-z\s]+$/.test(cardHolderInput.value))) {
+      if (this.cardHolder.length < 4 || !(/^[A-Za-z\s]+$/.test(this.cardHolder))) {
         this.isCardHolderIncorrect = true;
         return false;
       }
@@ -139,38 +150,17 @@ export default {
       return true;
     },
     isAllInputsHaveValue() {
-      const paymentInputData = document.querySelectorAll('.payment-data__input');
-      const bankCardNumberInputs = document.querySelectorAll('.bank-card-number__input');
-      const cvvCode = document.querySelector('.cvc-code__input').value.length;
-      const cardHolder = document.querySelector('.bank-card-holder__input').value.length;
       let result = true;
-      for (let i = 0; i < bankCardNumberInputs.length; i += 1) {
-        if (!bankCardNumberInputs[i].value.length) {
-          result = false;
-        }
-        if (i < 2 && !paymentInputData[i].value.length) {
-          result = false;
-        }
-      }
-      if (!cvvCode || !cardHolder) {
+      if (!this.cvvCode || !this.cardHolder || !this.paymentBill || !this.paymentSumm
+        || !this.cardNumberOne || !this.cardNumberTwo || !this.cardNumberThree
+        || !this.cardNumberFour) {
         result = false;
       }
       return result;
     },
     submitForm() {
-      const paymentInputData = document.querySelectorAll('.payment-data__input');
-      const bankCardNumberInputs = document.querySelectorAll('.bank-card-number__input');
-      const cvvCode = document.querySelector('.cvc-code__input').value;
-      const cardHolder = document.querySelector('.bank-card-holder__input').value;
-      const cardMonthExpires = document.querySelector('.bank-card-date__month').value;
-      const cardYearExpires = document.querySelector('.bank-card-date__year').value;
-
-      let cardNumber = '';
-      for (let i = 0; i < bankCardNumberInputs.length; i += 1) {
-        cardNumber += bankCardNumberInputs[i].value;
-      }
-      const paymentSumm = paymentInputData[1].value;
-      const paymentBill = paymentInputData[0].value;
+      const cardNumber = this.cardNumberOne + this.cardNumberTwo + this.cardNumberThree
+        + this.cardNumberFour;
       const currentDate = new Date();
       const operationDate = `${currentDate.getDate()}.${currentDate.getMonth()}.${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
       const isCardNumberValid = this.isCardNumberValid();
@@ -180,13 +170,13 @@ export default {
       const isCardInputsValid = isCardNumberValid && isCvcCodeValid && isCardHolderValid
       && isAllInputsHaveValue;
       const currentTransactionData = {
-        paymentBill,
-        paymentSumm,
+        paymentBill: this.paymentBill,
+        paymentSumm: this.paymentSumm,
         cardNumber,
-        cvvCode,
-        cardHolder,
-        cardMonthExpires,
-        cardYearExpires,
+        cvvCode: this.cvvCode,
+        cardHolder: this.cardHolder,
+        cardMonthExpires: this.cardMonth,
+        cardYearExpires: this.cardYear,
         operationDate,
       };
       if (isCardInputsValid) {
@@ -399,6 +389,9 @@ export default {
   @media (max-width: 768px) {
     .payment-form {
       margin-left: 0px;
+      &__submit {
+        margin-top: 260px;
+      }
     }
     .bank-card_reversed {
       left: 0;
@@ -406,7 +399,6 @@ export default {
     }
     .main-content-container {
       padding: 30px 10px;
-      padding-bottom: 250px;
     }
     .bank-card {
       width: 300px;
