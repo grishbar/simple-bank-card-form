@@ -37,13 +37,13 @@
           </div>
           <div class="bank-card-date">
             <div class="bank-card-date__title">Срок действия</div>
-            <select name="bank-card-date__month" id="" class="bank-card-date__month">
+            <select name="bank-card-date__month" class="bank-card-date__month">
               <option disabled>MM</option>
               <option v-for="n in 12" v-bind:key="n">
                 {{(n.toString().length > 1) ? n : '0' + n}}
               </option>
             </select>
-            <select name="bank-card-date__year" id="" class="bank-card-date__year">
+            <select name="bank-card-date__year" class="bank-card-date__year">
               <option disabled>YYYY</option>
               <option v-for="n in 12" v-bind:key="n">
                 {{new Date().getFullYear() + n - 1}}
